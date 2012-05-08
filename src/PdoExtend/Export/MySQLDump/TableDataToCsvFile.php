@@ -17,22 +17,25 @@ class TableDataToCsvFile implements ExportTableToFileInterface {
         $this->username = $username;
         $this->password = $password;
         $this->mysqlDumpPath = $mysqlDumpPath;
-        if($this->tmpDir != null) {
-            $this->tmpDir = $tmpDir;
-        } else {
-            $this->tmpDir = sys_get_temp_dir().'/'.$database;
-        }
+        $this->tmpDir = $tmpDir ?: sys_get_temp_dir().'/'.$database;
     }
 
     public function export(TableInterface $table, $toDirectory, $baseFileName = null) {
         if ($baseFileName === null) {
             $baseFileName = $table->getName().'-data';
         }
-        if (!is_dir($this->tmpDir)) {
-            mkdir($this->tmpDir, 0777, true);
-            chmod($this->tmpDir, 0777);
-        }
-        exec('mysqldump -u' . $this->username . ' -p' . quotemeta($this->password) . ' ' . $this->database . ' ' . $table . ' --fields-terminated-by=\\\0 --no-create-info --tab ' . $this->tmpDir);
+
+        @mkdir($this->tmpDir, 0777, true);
+        chmod($this->tmpDir, 0777);
+
+	    $command = 'mysqldump -u'.$this->username . ' -p'.quotemeta($this->password) . ' ' . $this->database . ' ' . $table . ' --fields-terminated-by=\\\0 --no-create-info --tab ' . $this->tmpDir;
+	    $output = array();
+	    $return = null;
+        exec($command, $output, $return);
+	    if($return) {
+		    throw new \Exception('mysql dump failed: '.implode(PHP_EOL, $output));
+	    }
+
         exec('cat ' . $this->tmpDir . '/' . $table . '.txt > ' . $toDirectory . '/' . $baseFileName . '.csv && rm '. $this->tmpDir . '/' . $table . '.txt');
         file_put_contents($toDirectory . '/' . $baseFileName . '.sql',
                 $this->getCsvLoad($baseFileName . '.csv', $table,

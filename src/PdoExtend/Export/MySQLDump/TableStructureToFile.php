@@ -22,7 +22,15 @@ class TableStructureToFile implements ExportTableToFileInterface {
         if($baseFileName === null) {
             $baseFileName = $table->getName().'-structure.sql';
         }
-        exec($this->mysqlDumpPath.'mysqldump -u' . $this->username . ' -p' . quotemeta($this->password) . ' ' . $this->database . ' ' . $table . ' --no-data --create-options --disable-keys --lock-tables --skip-add-drop-table --skip-comments  > "' . $toDirectory . '/' . $baseFileName . '"');
+
+	    $command = $this->mysqlDumpPath.'mysqldump -u' . $this->username . ' -p' . quotemeta($this->password) . ' ' . $this->database . ' ' . $table . ' --no-data --create-options --disable-keys --lock-tables --skip-add-drop-table --skip-comments  > "' . $toDirectory . '/' . $baseFileName . '"';
+	    $output = array();
+		$return = null;
+        exec($command, $output, $return);
+
+	    if($return) {
+		    throw new \Exception('mysql dump failed: '.implode(PHP_EOL, $output));
+	    }
     }
 
 }
