@@ -41,7 +41,7 @@ class DatabaseExportService {
     }
     
     private function destinationDirectoryDeleteTables($path) {
-        exec('rm -r ' . $path . '/* > /dev/null');
+        exec('rm -rf ' . $path . '/* > /dev/null');
     }
 
 }
