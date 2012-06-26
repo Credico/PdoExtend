@@ -45,10 +45,10 @@ class TableDataToCsvFile implements ExportTableToFileInterface {
     private function getCsvLoad($fileToLoad, $table, array $columns) {
         $columnsString = implode('`, `', $columns);
         $str = <<<EOF
+SET SQL_LOG_BIN=0;
 SET AUTOCOMMIT=0;
 SET UNIQUE_CHECKS=0;
 SET FOREIGN_KEY_CHECKS=0;
-SET SQL_LOG_BIN=0;
 
 LOAD DATA 
     LOCAL INFILE '$fileToLoad' 
@@ -58,11 +58,11 @@ LOAD DATA
     LINES TERMINATED BY '\\n' 
     (`$columnsString`);
 
-SET SQL_LOG_BIN=1;
 SET FOREIGN_KEY_CHECKS=1;
 SET UNIQUE_CHECKS=1;
 SET AUTOCOMMIT=1;
 COMMIT;
+SET SQL_LOG_BIN=1;
 
 EOF;
 
