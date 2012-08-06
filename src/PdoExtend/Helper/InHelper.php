@@ -20,6 +20,7 @@ class InHelper {
     }
 
     public function getFields() {
+        // we think this is a complicated way to do to an implode, please refactor :-)
         $count = count($this->fields);
         $sql = ' (';
         for ($i = ($count - 1);

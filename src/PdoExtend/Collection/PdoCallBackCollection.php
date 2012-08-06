@@ -2,7 +2,6 @@
 
 namespace PdoExtend\Collection;
 
-use iController\Shared\Map\Exception\EntityNotFoundException;
 
 class PdoCallBackCollection extends AbstractCollection implements \Countable {
 
@@ -22,11 +21,11 @@ class PdoCallBackCollection extends AbstractCollection implements \Countable {
     }
 
     protected function fetch() {
-        try {
-            $row = $this->pdoStatement->fetch(\PDO::FETCH_ASSOC);
-            return \call_user_func_array($this->callBack, array($row));
-        } catch (EntityNotFoundException $e) {
+        $row = $this->pdoStatement->fetch(\PDO::FETCH_ASSOC);
+        if($row === false ) {
             return false;
+        } else {
+            return \call_user_func_array($this->callBack, array($row));
         }
     }
 
