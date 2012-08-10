@@ -2,6 +2,7 @@
 
 namespace PdoExtend\Collection;
 
+/** @deprecated Use  ImmediateAppendablePdoCallBackCollection instead */
 class AppendablePdoCallBackCollection extends PdoCallBackCollection implements AppendableCollectionInterface {
 
     protected $appendedItems = array();

@@ -2,7 +2,7 @@
 
 namespace PdoExtend\Collection;
 
-
+/** @deprecated Use ImmediatePdoCallBackCollection instead */
 class PdoCallBackCollection extends AbstractCollection implements \Countable {
 
     private $pdoStatement;
