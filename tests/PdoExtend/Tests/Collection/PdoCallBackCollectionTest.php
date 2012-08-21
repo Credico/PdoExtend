@@ -5,7 +5,7 @@ namespace PdoExtend\Tests\Collection;
 use PdoExtend\Collection\PdoCallBackCollection;
 use PdoExtend\Collection\ReIterator;
 
-class PdoCallbackCollectionTest extends \PHPUnit_Framework_TestCase {
+class PdoCallBackCollectionTest extends \PHPUnit_Framework_TestCase {
 
     public function testItemsStayTheSame() {
 

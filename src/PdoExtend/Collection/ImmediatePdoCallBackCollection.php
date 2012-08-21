@@ -4,10 +4,10 @@ namespace PdoExtend\Collection;
 use iController\Platform\Exception\DeprecatedException;
 
 /**
- * Because PdoCallbackCollection doesn't work properly, this class pretends to be a PdoCallbackCollection,
+ * Because PdoCallBackCollection doesn't work properly, this class pretends to be a PdoCallBackCollection,
  * but in fact it's just a nice normal collection without any black magic.
  */
-class ImmediatePdoCallbackCollection extends PdoCallbackCollection implements \Countable
+class ImmediatePdoCallBackCollection extends PdoCallBackCollection implements \Countable
 {
 	/** @var array */
 	private $elements = array();
