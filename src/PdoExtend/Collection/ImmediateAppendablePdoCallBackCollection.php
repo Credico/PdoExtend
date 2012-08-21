@@ -1,4 +1,4 @@
- <?php
+<?php
 
 namespace PdoExtend\Collection;
 use iController\Platform\Exception\DeprecatedException;
