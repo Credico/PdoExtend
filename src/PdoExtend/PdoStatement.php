@@ -43,11 +43,7 @@ class PdoStatement extends \PDOStatement implements \Countable {
         $sql = $this->queryString;
 
         if (count($values) > 0) {
-            echo 'foo';
-            var_dump($values);
             array_multisort($values, SORT_ASC);
-            echo 'bar';
-            var_dump($values);
             foreach ($values as $key => $value) {
                 $sql = str_replace($key, $this->connection->quote($value), $sql);
             }
