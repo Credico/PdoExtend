@@ -26,7 +26,7 @@ class InHelper {
         for ($i = ($count - 1);
                 $i >= 0;
                 $i--) {
-            $sql .= ':' . $this->baseName . sprintf("%03d", $i);
+            $sql .= ':' . $this->baseName . $i;
             if($i > 0) {
                 $sql .= ', ';
             }
@@ -39,7 +39,7 @@ class InHelper {
     public function getStatement(\PDOStatement $statement) {
         $i = 0;
         foreach ($this->fields as $field) {
-            $statement->bindValue(':' . $this->baseName . sprintf("%03d", $i), $field,
+            $statement->bindValue(':' . $this->baseName . $i, $field,
                     $this->type);
             $i++;
         }
