@@ -43,14 +43,14 @@ class PdoStatement extends \PDOStatement implements \Countable {
         $sql = $this->queryString;
 
         if (count($values) > 0) {
-            array_multisort($values, SORT_DESC);
+            array_multisort($values, SORT_ASC);
             foreach ($values as $key => $value) {
                 $sql = str_replace($key, $this->connection->quote($value), $sql);
             }
         }
 
         if (count($this->bound_params)) {
-            array_multisort($this->bound_params, SORT_DESC);
+            array_multisort($this->bound_params, SORT_ASC);
             foreach ($this->bound_params as $key => $param) {
                 $value = $param['value'];
                 if (!is_null($param['type'])) {
