@@ -21,8 +21,8 @@ class PdoStatementTest extends \PHPUnit_Framework_TestCase {
 			array(),
 			new MyQuoterConnection(),
 			array(
-				":portfolio1" => array('value' => '10', 'type' => \PDO::PARAM_INT),
-				":portfolio10" => array('value' => '20', 'type' => \PDO::PARAM_INT)
+				":portfolio1" => array('value' => '10', 'type' => \PDO::PARAM_INT, 'maxlen' => -1),
+				":portfolio10" => array('value' => '20', 'type' => \PDO::PARAM_INT, 'maxlen' => -1)
 			)
 		);
 
