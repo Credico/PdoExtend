@@ -40,53 +40,7 @@ class PdoStatement extends \PDOStatement implements \Countable {
     }
 
     public function getSql($values = array()) {
-        $sql = $this->queryString;
-
-        if (count($values) > 0) {
-            array_multisort($values, SORT_ASC);
-            foreach ($values as $key => $value) {
-                $sql = str_replace($key, $this->connection->quote($value), $sql);
-            }
-        }
-
-        if (count($this->bound_params)) {
-            array_multisort($this->bound_params, SORT_ASC);
-            foreach ($this->bound_params as $key => $param) {
-                $value = $param['value'];
-                if (!is_null($param['type'])) {
-                    $value = self::cast($value, $param['type']);
-                }
-                if ($param['maxlen'] && $param['maxlen'] != self::NO_MAX_LENGTH) {
-                    $value = self::truncate($value, $param['maxlen']);
-                }
-                if (!is_null($value)) {
-                    $sql = str_replace($key, $this->connection->quote($value), $sql);
-                } else {
-                    $sql = str_replace($key, 'NULL', $sql);
-                }
-            }
-        }
-        return $sql;
-    }
-
-    static protected function cast($value, $type) {
-        switch ($type) {
-            case \PDO::PARAM_BOOL:
-                return (bool) $value;
-                break;
-            case \PDO::PARAM_NULL:
-                return null;
-                break;
-            case \PDO::PARAM_INT:
-                return (int) $value;
-            case \PDO::PARAM_STR:
-            default:
-                return $value;
-        }
-    }
-
-    static protected function truncate($value, $length) {
-        return substr($value, 0, $length);
+        return PdoStatementVariableBinder::bindSql($this->queryString, $values, $this->connection, $this->bound_params);
     }
 
     public function execute($input_parameters = null) {
