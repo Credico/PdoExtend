@@ -14,10 +14,19 @@ class PdoStatementTest extends \PHPUnit_Framework_TestCase {
     public function BindNotDependingOnSorting()
     {
 
-        $this->assertEquals("SELECT * FROM facturen WHERE bla = '10' AND sla = '20'", PdoStatementVariableBinder::bindSql("SELECT * FROM facturen WHERE bla = :portfolio1 AND sla = :portfolio10",
-            array(),new MyQuoterConnection(), array(
-                ":portfolio1" => array('value' =>'10', 'type'=> \PDO::PARAM_INT),
-                ":portfolio10" => array('value' =>'20', 'type'=> \PDO::PARAM_INT))));
+		$expected = "SELECT * FROM facturen WHERE bla = '10' AND sla = '20'";
+
+		$boundSql = PdoStatementVariableBinder::bindSql(
+			"SELECT * FROM facturen WHERE bla = :portfolio1 AND sla = :portfolio10",
+			array(),
+			new MyQuoterConnection(),
+			array(
+				":portfolio1" => array('value' => '10', 'type' => \PDO::PARAM_INT),
+				":portfolio10" => array('value' => '20', 'type' => \PDO::PARAM_INT)
+			)
+		);
+
+		$this->assertEquals($expected, $boundSql);
     }
 }
 
