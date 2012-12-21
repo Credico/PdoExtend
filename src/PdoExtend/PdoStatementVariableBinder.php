@@ -19,7 +19,7 @@ class PdoStatementVariableBinder
         }
 
         if (count($boundParams)) {
-            array_multisort($boundParams, SORT_DESC);
+            krsort($boundParams);
             foreach ($boundParams as $key => $param) {
                 $value = $param['value'];
                 if (!is_null($param['type'])) {
