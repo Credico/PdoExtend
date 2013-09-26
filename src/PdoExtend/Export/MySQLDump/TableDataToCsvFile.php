@@ -28,7 +28,16 @@ class TableDataToCsvFile implements ExportTableToFileInterface {
         @mkdir($this->tmpDir, 0777, true);
         chmod($this->tmpDir, 0777);
 
-	    $command = 'mysqldump -u'.$this->username . ' -p'.quotemeta($this->password) . ' ' . $this->database . ' ' . $table . ' --fields-terminated-by=\\\0 --no-create-info --tab ' . $this->tmpDir;
+	    $command = 'mysqldump -u' . $this->username . 
+			' -p' . quotemeta($this->password) . ' ' . 
+			$this->database . ' ' . 
+			$table . 
+			' --fields-terminated-by=, ' . 
+			' --fields-enclosed-by=\'"\' ' . 
+			' --fields-escaped-by="\\\\" ' . 
+			'--no-create-info ' . 
+			'--tab ' . $this->tmpDir;
+
 	    $output = array();
 	    $return = null;
         exec($command, $output, $return);
@@ -54,7 +63,8 @@ LOAD DATA
     LOCAL INFILE '$fileToLoad' 
     IGNORE 
     INTO TABLE $table
-    FIELDS TERMINATED BY '\\0'
+    FIELDS TERMINATED BY ','
+	ENCLOSED BY '"'
     LINES TERMINATED BY '\\n' 
     (`$columnsString`);
 
