@@ -1,0 +1,11 @@
+
+{
+	"name": "Credico/PdoExtend",
+	"description": "Pdo, with some extra functions",
+	"type": "library",
+	"homepage": "https://github.com/Credico/PdoExtend",
+	"license": "Proprietary",
+	"require": { "php": ">=5.3" },
+	"autoload": { "psr-0": { "PdoExtend\\": "src" } }
+}
+
