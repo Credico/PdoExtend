@@ -18,7 +18,7 @@ class Table implements Structure\TableInterface {
         $this->connection = $connection;
         $this->tableName = $tableName;
 
-        $sql = 'DESCRIBE ' . $this->getName() . ';';
+        $sql = 'DESCRIBE `' . $this->getName() . '`;';
         $statement = $this->connection->query($sql);
         $this->columns = new \ArrayIterator(\array_map(
                                 function ($input) {

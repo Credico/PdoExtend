@@ -1,6 +1,6 @@
 
 {
-	"name": "Credico/PdoExtend",
+	"name": "credico/pdo-extend",
 	"description": "Pdo, with some extra functions",
 	"type": "library",
 	"homepage": "https://github.com/Credico/PdoExtend",
